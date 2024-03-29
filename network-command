@@ -1,0 +1,595 @@
+Linux networking commands.
+
+ip
+The ip command is a unified networking tool for Linux systems. The ip command helps view and configure routing, interfaces, network devices, and tunnels.
+
+The command is part of the iproute2 package and replaces many older networking tools, such as the route, ifconfig, and netstat commands.
+
+Syntax
+
+The syntax for the ip command is:
+
+ip [options] object [command]
+
+Each part of the command does the following:
+
+[options] are the command-line parameters that modify the command's behavior.
+object represents the available objects for configuration.
+[command] is a subcommand, an action performed on an object. The available commands differ depending on the object.
+Example
+
+The ip command shows the help menu when used without any options, objects, or commands:
+
+ip
+
+ip terminal output
+Add the -V option to see the current version:
+
+ip -V
+
+ip -V terminal output
+The output prints the package and library version for the ip utility.
+
+ip addr
+The ip addr command manages and shows network interface IP addresses. The command aliases are ip address or ip a.
+
+Syntax
+
+The syntax for the ip addr command is:
+
+ip addr [subcommand]
+
+The available subcommands on the object are:
+
+add - Adds a new address.
+show - Shows protocol addresses.
+del - Removes an address.
+flush - Flushes addresses based on specified criteria.
+Every subcommand has additional options and keywords to perform specific tasks for the network interface addresses.
+
+Example
+
+The ip addr command without any subcommands shows the network interface information, including the associated IP addresses:
+
+ip addr
+
+ip addr terminal output
+The output for ip addr show is identical.
+
+To show a specific network interface, use the ip addr show subcommand and add the interface name. For example:
+
+ip addr show [interface]
+
+ip addr show lo terminal output
+The command filters the ip addr output and shows only information relevant to the specified interface.
+
+ip link
+The ip link command manages and shows network interface information. It allows viewing, changing, enabling, and disabling network interfaces.
+
+Syntax
+
+The syntax for the command is:
+
+ip link [subcommand] [options] [interfaces]
+
+The subcommands enable the following actions:
+
+show - Prints network interface information.
+set - Changes or adds information to a network interface.
+add - Adds a new network interface.
+del - Deletes a network interface.
+Subcommands have additional options and allow targeting specific interfaces.
+
+Example
+
+The ip link command without any additional subcommands and options shows all network interface link information:
+
+ip link
+
+ip link terminal output
+The ip link show command provides the same output.
+
+To turn off an interface, use the following syntax as a superuser:
+
+sudo ip link set [interface] down
+
+ip link set state down terminal output
+The interface shows the state as DOWN after executing the command.
+
+Similarly, to disable an interface, use the up keyword:
+
+sudo ip link set [interface] up
+
+ip link set state up terminal output
+The interface state changes to UP.
+
+ip route
+The ip route command shows and configures the IP routing table. The command allows users to adjust the routing table and perform other crucial networking tasks with the routing table.
+
+Syntax
+
+The command follows a specific syntax, as shown below:
+
+ip route [subcommand] [options] [destination]
+
+The following actions are available as subcommands:
+
+show - Shows the routing table.
+add - Adds a new route to the table.
+del - Deletes a route from the table.
+change - Modifies an existing route.
+The [destination] parameter determines where the network traffic is directed. Additional options help control the traffic flow further.
+
+Example
+
+To view the routing table, run the following command:
+
+ip route show
+
+ip route show terminal output
+Each line in the output represents individual routes in the table.
+
+Note: For additional options on managing network interfaces, read about ifdown command.
+
+ifconfig
+The ifconfig (interface configuration) command manages and shows network interface information on a system. The command is part of the net-tools package.
+
+Although the command has limited functions compared to the ip command, the ifconfig command is still commonly used for configuring network interfaces.
+
+Syntax
+
+The syntax for the command is:
+
+ifconfig [interface] [options]
+
+The syntax breaks down into the following:
+
+[interface] - The network interface to configure or show information for. The parameter is optional, and not specifying an interface shows the status of all active interfaces.
+[options] - Command-line options to perform specific actions or configure certain parameters. The parameter is also optional.
+Example
+
+To display the summary of all active network interfaces, run:
+
+ifconfig -s
+
+ifconfig -s terminal output
+The command prints a shortlist with crucial information about active interfaces.
+
+Note: See our guide on using ifconfig on CentOS.
+
+dig
+The dig command queries Domain Name Systems (DNS) and finds information for DNS records. The command collects domain name information and associated records.
+
+Use dig to troubleshoot DNS issues and to verify DNS configuration on a Linux system. It is suitable for creating scripts and automating tasks related to network troubleshooting. The robust command is so prevalent in network troubleshooting that a Windows version of dig is available.
+
+Syntax
+
+The dig command syntax is as follows:
+
+dig [options] [domain] [record type] [DNS server]
+
+The components of the command are:
+
+[options] - Parameters that modify the behavior of the command.
+[domain] - The domain name to query.
+[record type] - The DNS record type to query. Defaults to A records.
+[DNS server] - A specified DNS server for the query.
+All parameters are optional. The command shows the default DNS resolver information and query statistics without additional options.
+
+Example
+
+To perform a simple DNS lookup, run the command with a domain name:
+
+dig google.com
+
+dig google.com terminal output
+Alternatively, provide the IP address and the -x option to perform a reverse DNS lookup. For example:
+
+dig -x 8.8.8.8
+
+dig -x 8.8.8.8 terminal output
+The ANSWER SECTION in the output shows the requested domain name.
+
+Note: Excessive DNS lookups impact website performance. Reducing DNS lookups lowers server load and network latency.
+
+nslookup
+The nslookup command is similar to the dig command. The main difference between the two commands is that nslookup features an interactive mode. It enables diagnosing and querying DNS servers, which is helpful for network troubleshooting and DNS tasks.
+
+The command is available for most Unix-like and Windows operating systems.
+
+Syntax
+
+The general syntax for the nslookup command is:
+
+nslookup [domain] [DNS server]
+
+The command components are:
+
+[domain] - The domain name to look up. Not specifying a name enables querying multiple domains in interactive mode.
+[DNS server] - The DNS server to use for the lookup. Defaults to the system DNS server when left out.
+The query performs A record domain lookups by default.
+
+Example
+
+The following example shows how to perform a DNS lookup for a domain:
+
+nslookup google.com
+
+nslookup google.com terminal output
+The output shows the DNS resolution information for the provided domain.
+
+netstat
+The netstat command (network statistics) is a networking utility that shows various networking statistics. The command provides statistics for network ports and shows port availability.
+
+The command is part of the net-tools package and is considered obsolete. The recommended replacement is the ss command, which is part of iproute2. Other functionalities of the netstat command are available with the ip command.
+
+Syntax
+
+The syntax for the netstat command is simple:
+
+netstat [options]
+
+The command allows combining various options to customize the output and to show specific network information types. The command lists open sockets for all configured address families without any options.
+
+Example
+
+For example, to list all TCP ports with the netstat command, use the -at options:
+
+netstat -at
+
+netstat -at terminal output
+The output shows all active TCP connections on the system.
+
+traceroute
+The traceroute command is a networking diagnostics tool available for Linux, macOS, and Windows. The command tracks the route that packets take to reach a destination on a TCP/IP network.
+
+Use the command to discover routing issues and bottlenecks by showing a packet's intermediate hops while traveling from source to destination.
+
+The default trace is 30 hops with a packet size of 60 bytes for IPv4 (80 bytes for IPv6).
+
+Note: See our head-to-head comparison of IPv4 vs. IPv6.
+
+Syntax
+
+The syntax for the traceroute command is:
+
+traceroute [options] [hostname/IP]
+
+The [hostname/IP] parameter is required, while additional options control whether to perform DNS lookups, the TTL parameter, and the packet type.
+
+Example
+
+To trace a packet route using the TCP protocol, run the traceroute command as an administrator with the -T option. For example:
+
+sudo traceroute -T 184.95.56.34
+
+traceroute -T terminal output
+The output shows the sequential route from source to destination.
+
+tracepath
+The tracepath command is similar to the traceroute command. The command identifies paths and latencies from source to destination, mapping the router and network hops.
+
+Although traceroute is a well-known command with comprehensive options, the tracepath command is a simple network mapping tool available on most Linux systems. For more details, see the comparison between tracepath and traceroute.
+
+Syntax
+
+The syntax for the tracepath command is:
+
+tracepath [options] [hostname/IP]
+
+The additional [options] control the query behavior, such as the number of hops and whether to perform a reverse DNS lookup for the addresses. The [hostname/IP] field is required and represents the destination.
+
+Example
+
+Run the tracepath command without any options to perform a simple trace from destination to host:
+
+tracepath [hostname/IP]
+
+Tracepath command terminal output
+The output shows the hop number, IP address or resolved hostname, and the round-trip time (RTT) for each hop.
+
+host
+The host command is a simple tool for performing DNS lookups. The command resolves IP addresses into domain names and vice versa.
+
+Use the command to perform a query for DNS records and basic DNS troubleshooting.
+
+Syntax
+
+The syntax for the host command is:
+
+host [options] [hostname/IP]
+
+The various [options] control the command's behavior, such as the query type or the start of authority (SOA) for the provided domain.
+
+Example
+
+To perform a simple DNS lookup, use the host command and provide a hostname or IP address. For example:
+
+host google.com
+
+host google.com terminal output
+The output shows the resolved IPv4 and IPv6 addresses for the provided hostname.
+
+hostname
+The hostname command helps display and change a system's hostname and domain and identifies devices within a network environment.
+
+Use the command to display, change, or search for hostnames.
+
+Syntax
+
+The syntax for the hostname command is:
+
+hostname [options] [name]
+
+The [options] parameter control what the command displays, while the [name] parameter temporarily sets the hostname to the provided name.
+
+Example
+
+To temporarily change the system hostname, run the command without any options and provide a name:
+
+sudo hostname [name]
+
+The command does not produce an output. Check the current hostname by running:
+
+hostname
+
+hostname terminal output
+The current hostname prints to the screen.
+
+Note: To permanently change the hostname, follow one of our distribution-specific guidelines:
+
+How to Set or Change a Hostname in CentOS 7
+How to Change or Set Hostname on CentOS 8 / RHEL 8
+How to Change Hostname on Ubuntu 18.04
+How to Change Hostname on Ubuntu 20.04
+How to Change Hostname in Debian 10
+ping
+The ping command is a network utility for testing whether a host is reachable. The command sends ICMP requests to a host (a computer or server) and measures the round-trip time (RTT).
+
+Pinging helps determine the network latency between two nodes and whether a network is reachable.
+
+Syntax
+
+The syntax for the ping command is:
+
+ping [options] [hostname/IP]
+
+State the [hostname/IP] of the host to ping. Add options to control the command's behavior, such as the ping request number, intervals, or packet size.
+
+Example
+
+An example ping command request looks like the following:
+
+ping -c 5 google.com
+
+ping -c 5 google.com terminal output
+The command sends five ICMP packets to the provided host and prints the statistics.
+
+ss
+The ss command is a CLI tool for displaying network statistics. The tool is part of the iproute2 package and is a faster alternative to the netstat command.
+
+Use the ss command to examine network sockets and view various network-related data.
+
+Syntax
+
+The basic syntax for the command is:
+
+ss [options] [filter]
+
+The [options] parameter allows filtering sockets by protocol, while the [filter] parameter helps queue sockets by state to narrow down the result view.
+
+Example
+
+For example, to show all listening TCP sockets using the ss command, add the -lt options:
+
+ss -lt
+
+ss -lt terminal output
+The output shows all TCP sockets in the LISTEN state waiting for incoming connections.
+
+route
+The route command in Linux is a specialized command for displaying and configuring the routing table. The command modifies the kernel's IP routing tables and helps set up static routes to specific hosts or networks.
+
+Use the command after configuring a network interface with a tool such as the ifconfig command.
+
+Note: The preferable alternative to the route command is the ip route command.
+
+Syntax
+
+The syntax for the route command is:
+
+route [options] [subcommand] [arguments]
+
+It contains the following components:
+
+[options] - Optional command-line parameters that control the output view, address family, and IP protocol.
+[subcommand] - An action to perform, such as add or delete.
+[arguments] - Additional arguments that differ depending on the subcommand.
+Example
+
+To view the current routing table, use the route command without any options:
+
+route
+
+route add default gw [gateway]
+Use the following format to add a default gateway:
+
+sudo route add default gw [gateway]
+
+sudo route add default gw terminal output
+The command adds a default route, which is used when no other routes match. The provided gateway must be a directly reachable route.
+
+arp
+The arp command shows and configures the Address Resolution Protocol (ARP) cache. The ARP protocol maps IP addresses to physical Media Access Control (MAC) addresses in a local network. The cache stores these mappings for all devices on the local network.
+
+Syntax
+
+The syntax for the arp command is in the following format:
+
+arp [options] [hostname/IP]
+
+The [options] parameter modifies the command's behavior, such as setting up and deleting actions, or controlling the output.
+The [hostname/IP] parameter is an optional identifier for a remote system for which to resolve a MAC address. If unprovided, the command checks the local ARP cache.
+Example
+
+To display the ARP cache, run the arp command without any additional parameters:
+
+arp
+
+arp terminal output
+The output shows the ARP cache (IP and MAC addresses) in a table.
+
+iwconfig
+The iwconfig command shows and configures wireless network interface information. The command comes in handy for troubleshooting wireless network issues.
+
+Use the command to view or change a wireless network's name, power management settings, and other wireless configurations.
+
+Syntax
+
+The syntax for the iwconfig command is:
+
+iwconfig [interface] [options]
+
+The [interface] parameter filters the wireless network interface by name, whereas the [options] parameter controls various settings, such as the operation mode, rate limits, and the wireless encryption key.
+
+Example
+
+To view the available wireless interfaces on the system and the current setup, run the command without any parameters:
+
+iwconfig
+
+iwconfig terminal output
+The command shows all information on wireless interfaces on the system.
+
+curl or wget
+The wget and curl commands are command-line tools for downloading files from the internet. The two tools are similar, but there are slight differences in how they work and the options they offer:
+
+The wget command downloads files from the web using HTTP, HTTPS, or FTP protocols. The tool is simple to use for file downloads.
+The curl command is versatile and supports various network protocols, such as SCP, IMAP POP3, SMTP, etc. The tool also sends HTTP requests and interacts with web services.
+Use curl or wget to test network download speeds.
+
+Syntax
+
+The syntaxes for the wget and curl commands are similar:
+
+wget [options] [URL]
+
+curl [options] [URL]
+
+The [options] parameter controls the various download and output options, while the [URL] parameter is a file's download URL. The curl command features many advanced options and usage patterns compared to the wget command.
+
+Example
+
+To download a file using the wget command, use the following format:
+
+wget -O [file name] [URL]
+
+Alternatively, to use curl to achieve the same task, run:
+
+curl -o [file name] [URL]
+
+The file downloads from the specified URL and saves the contents to the provided file name.
+
+mtr
+The mtr command (my traceroute) is a diagnostics tool that combines elements from the ping and traceroute commands. The command sends real-time insights into network quality, making it an excellent tool for troubleshooting high latency and packet loss.
+
+Syntax
+
+The syntax for the mtr command is:
+
+mtr [options] [hostname/IP]
+
+The [options] parameter controls the packet number and size, while the [hostname/IP] parameter contains the destination.
+
+Example
+
+The mtr command, without any parameters, starts a trace session to the provided host. For example:
+
+mtr google.com
+
+mtr command terminal output
+To exit the window, press q.
+
+whois
+The whois command queries information about domain names, IP addresses, and other network-related information. Use the command to fetch domain ownership details, such as the domain's ownership details, registration date, and expiration date.
+
+Syntax
+
+The syntax for the whois command is:
+
+whois [options] [query]
+
+The [options] parameter allows setting a specific WHOIS server to query, changing the protocol, and adding additional query parameters.
+The [query] parameter is the domain name, IP address, or Autonomous System Number (ASN) to look up.
+Example
+
+Run the command without any options to perform a simple query for a given domain name. For example:
+
+whois google.com
+
+whois google.com terminal output
+The output shows the results of the basic WHOIS lookup for the provided domain name.
+
+iftop
+The iftop command is a network monitoring utility. Use the command to view network connections and bandwidth usage in real time.
+
+Syntax
+
+The syntax for the iftop command is:
+
+iftop [options]
+
+The [options] parameter controls the display information. The command also requires sufficient privileges to monitor all traffic on the network interface.
+
+Example
+
+The primary usage of iftop is without any additional options:
+
+sudo iftop
+
+sudo iftop terminal output
+The command opens a new monitoring screen, which changes as data transfers via the network interface.
+
+The interface allows controlling the display from the monitoring screen, such as toggling the source (s) or destination (d) views. To exit the screen, press q.
+
+tcpdump
+The tcpdump command is a packet sniffer and network security tool that captures real-time network packet information. Use the command to analyze traffic, troubleshoot issues, and monitor network security.
+
+Syntax
+
+The syntax for the tcpdump command is:
+
+tcpdump [options] [filter]
+
+The [options] parameter handles various display options, controls the packet number, and enables working with files. Use the [filter] parameter to enter the criteria for packet capturing.
+
+Example
+
+To capture packets on a specific port, use the following format:
+
+sudo tcpdump port 80
+
+sudo tcpdump port 80 terminal output
+The filter port 80 captures packets on the specified port to monitor HTTP traffic.
+
+ifplugstatus
+The ifplugstatus command is a simple utility to check the network interface status. The command helps determine whether an ethernet cable is connected to an interface.
+
+Use ifplugstatus to check a network's physical link, especially after changes to the network interface.
+
+Syntax
+
+The syntax for the ifplugstatus command is:
+
+ifplugstatus [options] [interface]
+
+The [options] parameter allows setting a specific configuration file or running in batch mode for scripting. State the [interface] parameter to check the status of the specified interface.
+
+Example
+
+To list the status for all network interfaces, run the command without any parameters:
+
+ifplugstatus
+
+ifplugstatus terminal output
+If the output states link beat detected, the interface has an active physical link.
