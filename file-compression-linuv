@@ -1,0 +1,64 @@
+File Compression and Archiving — Gzip, Zip, and Tar
+Compressing with Gzip and Zip
+Compressed files use less disk space and download faster than large, uncompressed files. You can compress Linux files with the open-source compression tool Gzip or with Zip, which is recognized by most operating systems.
+
+By convention, compressed files are given the extension .gz. The command Gzip creates a compressed file ending with .gz; Gunzip extracts the compressed files and removes the .gz file.
+
+To compress a file, at a shell prompt, type the following command:
+
+gzip filename.ext
+The file will be compressed and saved as filename.ext.gz.
+
+To expand a compressed file, type:
+
+gunzip filename.ext.gz
+The filename.ext.gz is deleted and replaced with filename.ext.
+
+If you exchange files with non-Linux users, you may want to use zip to avoid compatibility problems. Red Hat Linux can easily open zip or gzip files, but non-Linux operating systems may have problems with gzip files.
+
+To compress a file with zip, type the following:
+
+zip -r filename.zip files
+In this example, filename represents the file you are creating and files represents the files you want to put in the new file:
+
+To extract the contents of a zip file, type:
+
+unzip filename.zip
+You can zip or gzip multiple files at the same time. List the files with a space between each one.
+
+gzip filename.gz file1 file2 file3 /user/work/school
+The above command will compress file1, file2, file3, and the contents of the /user/work/school directory and put them in filename.gz.
+
+Archiving with Tar
+Tar files place several files or the contents of a directory or directories in one file. This is a good way to create backups and archives. Usually, tar files end with the .tar extension.
+
+To create a tar file, type:
+
+tar -cvf filename.tar files/directories
+In this example, filename.tar represents the file you are creating and files/directories represents the files or directories you want to put in the new file.
+
+You can use absolute or relative pathnames for these files and directories (for more on pathnames, see the section called Changing Directories with cd in Chapter 10). Separate the names of files and directories with a space.
+
+The following input would create a tar file using absolute pathnames:
+
+tar -cvf foo.tar /home/mine/work /home/mine/school
+The above command would place all the files in the /work subdirectory and the /school subdirectory in a new file called foo.tar in the current working directory.
+
+The command tar -cvf foo.tar file1.txt file2.txt file3.txt would place file1.txt, file2.txt and file3.txt in a new file called foo.tar.
+
+To list the contents of a tar file, type:
+
+tar -tvf foo.tar
+To extract the contents of a tar file, type:
+
+tar -xvf foo.tar
+This command does not remove the .tar file, but it places copies of the .tar contents in the current working directory.
+
+The tar command does not compress files automatically. You can compress tar files with:
+
+tar -czvf foo.tar
+Compressed tar files are conventionally given the extension .tgz and are compressed with gzip.
+
+To expand a compressed tar file type:
+
+tar -xzvf foo.tgz
