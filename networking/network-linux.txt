@@ -1,0 +1,10 @@
+
+apt-get install net-tools
+
+Hentikan antarmuka jaringan eth0:
+ifdown eth0
+Memulai antarmuka jaringan eth0:
+ifup eth0
+
+
+atau /etc/init.d/networking restart
