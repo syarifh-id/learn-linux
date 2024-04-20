@@ -1,6 +1,5 @@
 sudo adduser <new username> to add new user
 
-
 sudo passwd <username>to change the user's password
 
 su <username> to swicth user
