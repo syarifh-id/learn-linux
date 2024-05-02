@@ -1,4 +1,0 @@
-sudo apt install apache2
-
-
-sudo service start apache2
